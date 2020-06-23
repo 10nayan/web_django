@@ -5,3 +5,5 @@ class MovieForm(ModelForm):
     class Meta:
         model=Movie
         fields="__all__"
+class Task(forms.Form):
+    name=forms.CharField(label='Task',max_length=100)

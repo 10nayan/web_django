@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <h1> Task</h1>
+        {% if task_name %}
+        <ul>
+        {% for task in task_name %}
+            <li><a>{{ task }}</a></li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <p>No task is available.</p>
+        {% endif %}
+        <form action='{% url 'task' %}' method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Add Task</button>
+        </form>
+    
+</body>
+</html>
