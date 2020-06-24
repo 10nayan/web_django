@@ -5,13 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'second/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
     <h1> Movie</h1>
     <form action='{% url 'index' %}' method="POST">
         {% csrf_token %}
-        {{form.as_p}}
+        {{form}}
         <input type="submit">
     </form>
+    <br>
+    <br>
+    <h1>All Movies</h1>
+    <table style="width:100%;">
+        <tr>
+            <th>Name</th>
+            <th>Release year</th>
+            <th>Director</th>
+            <th>Actor</th>
+        </tr>
+        {% for obj in objs%}
+            <tr>
+                <th>{{obj.name}}</th>
+                <th>{{obj.release_year}}</th>
+                <th>{{obj.director}}</th>
+                <th>{{obj.actor}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+
 </body>
 </html>

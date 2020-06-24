@@ -7,6 +7,6 @@ class Movie(models.Model):
     director=models.CharField(max_length=50)
     actor=models.CharField(max_length=50)
     def __str__(self):
-        return self.name
+        return self.name+' '+self.release_year+" "+self.director+' '+self.actor
 
 
