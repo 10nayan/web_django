@@ -3,14 +3,15 @@ from .models import Movie,User
 from .forms import MovieForm,Task,UserForm
 from django.http import HttpResponse
 task_name=[]
-
+def home(request):
+    return render (request, 'navbar.html')
 
 def index(request):
     objs=Movie.objects.all()
     if request.method=='POST':
         form=MovieForm(request.POST)
         if form.is_valid():
-            new_movie=form.save()
+            form.save()
             return redirect('/second/')
     else:
         form=MovieForm()
@@ -28,7 +29,7 @@ def register(request):
     if request.method=="POST":
         form=UserForm(request.POST)
         if form.is_valid():
-            f=form.save()
+            form.save()
             return redirect('/second/register')
     else:
         form=UserForm()
