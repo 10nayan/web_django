@@ -23,7 +23,7 @@
         </tr>
         {% for obj in objs%}
             <tr>
-                <th>{{obj.name}}</th>
+                <th><a href="detail/{{obj.id}}">{{obj.name}}</a></th>
                 <th>{{obj.release_year}}</th>
                 <th>{{obj.director}}</th>
                 <th>{{obj.actor}}</th>

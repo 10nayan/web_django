@@ -4,7 +4,7 @@ from .forms import MovieForm,Task,UserForm
 from django.http import HttpResponse
 task_name=[]
 def home(request):
-    return render (request, 'navbar.html')
+    return render (request, 'second/navbar.html')
 
 def index(request):
     objs=Movie.objects.all()
@@ -12,7 +12,7 @@ def index(request):
         form=MovieForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/second/')
+            return redirect('/second/home')
     else:
         form=MovieForm()
     return render(request,'second/index.html',{'form': form,'objs':objs})
@@ -34,5 +34,12 @@ def register(request):
     else:
         form=UserForm()
     return render(request,'second/register.html',{'form':form})
+def movie_details(request,my_id=1):
+    movie=Movie.objects.get(id=my_id)
+    context={
+        "objects":movie
+    }
+    return render(request,'second/detail.html',context)
+
 
 # Create your views here.

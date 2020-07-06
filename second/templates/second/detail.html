@@ -1,0 +1,8 @@
+{% extends 'second/base.html' %}
+{% block title%} detail {% endblock%}
+{% block content %}
+<h1>{{objects.name}}</h1>
+<p>Released year: {{objects.release_year}}</p>
+<p>Director: {{objects.director}}</p>
+<p>Actor: {{objects.actor}}</p>
+{% endblock %}
