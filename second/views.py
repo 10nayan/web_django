@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Movie,User
 from .forms import MovieForm,Task,UserForm
 from django.http import HttpResponse
@@ -35,11 +35,19 @@ def register(request):
         form=UserForm()
     return render(request,'second/register.html',{'form':form})
 def movie_details(request,my_id=1):
-    movie=Movie.objects.get(id=my_id)
+    #movie=Movie.objects.get(id=my_id)
+    movie=get_object_or_404(Movie,id=my_id)
     context={
         "objects":movie
     }
     return render(request,'second/detail.html',context)
-
-
+def movie_delete(request,my_id=1):
+    movie=Movie.objects.get(id=my_id)
+    context={
+        "objects":movie
+    }
+    if request.method=="POST":
+        movie.delete()
+        return redirect('../../')
+    return render (request,'second/delete.html',context)
 # Create your views here.

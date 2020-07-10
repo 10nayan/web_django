@@ -20,13 +20,15 @@
             <th>Release year</th>
             <th>Director</th>
             <th>Actor</th>
+            <th>Action</th>
         </tr>
         {% for obj in objs%}
             <tr>
-                <th><a href="detail/{{obj.id}}">{{obj.name}}</a></th>
+                <th><a href="{% url 'detail' obj.id %}">{{obj.name}}</a></th>
                 <th>{{obj.release_year}}</th>
                 <th>{{obj.director}}</th>
                 <th>{{obj.actor}}</th>
+                <th><a href="{% url 'delete' obj.id %}">Delete</a></th>
             </tr>
         {% endfor %}
     </table>
