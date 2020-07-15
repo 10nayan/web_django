@@ -6,7 +6,7 @@
     {% endblock %}
     {% block content %}
     <h1> Movie</h1>
-    <form action='{% url 'index' %}' method="POST">
+    <form action='{% url 'second:index' %}' method="POST">
         {% csrf_token %}
         {{form}}
         <input type="submit">
@@ -24,11 +24,11 @@
         </tr>
         {% for obj in objs%}
             <tr>
-                <th><a href="{% url 'detail' obj.id %}">{{obj.name}}</a></th>
+                <th><a href="{{obj.get_absolute_url}}">{{obj.name}}</a></th>
                 <th>{{obj.release_year}}</th>
                 <th>{{obj.director}}</th>
                 <th>{{obj.actor}}</th>
-                <th><a href="{% url 'delete' obj.id %}">Delete</a></th>
+                <th><a href="{% url 'second:delete' obj.id %}">Delete</a></th>
             </tr>
         {% endfor %}
     </table>

@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import index,task,register,home,movie_details,movie_delete
+app_name='second'
 urlpatterns=[
-    path("",home),
+    path("",home,name='home'),
     path("home",index,name="index"),
     path('task', task, name='task'),
     path('register',register, name='register'),

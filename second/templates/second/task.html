@@ -11,7 +11,7 @@
         {% else %}
         <p>No task is available.</p>
         {% endif %}
-        <form action='{% url 'task' %}' method="POST">
+        <form action='{% url 'second:task' %}' method="POST">
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit">Add Task</button>
