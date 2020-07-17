@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>{{object.title}}</h1>
-    <form action='{% url 'home' %}'>{% csrf_token %}
+    <form method="POST">{% csrf_token %}
         <h3>Do you want to delete the post "{{ object.title }}"?</h3>
         <p><input type='submit' value='Yes' />  <a href='../'>Cancel</a></p>
     

@@ -9,8 +9,13 @@
 <body>
     <h1>Article</h1>
 {% for object in object_list%}
-<p>{{object.id}}-<a href="{{object.get_absolute_url}}"> {{object.title}}</a></p>
+<p>{{object.id}}-<a href="{{object.get_absolute_url}}"> {{object.title}}</a>
+    <a href="{% url 'update' object.pk %}">Edit</a>
+    <a href="{% url 'delete' object.pk %}">Delete</a>
+</p>
 {% endfor %}
+<br>
+<button onclick=window.location.href="{% url 'create' %}">Create</button>
     
 </body>
 </html>

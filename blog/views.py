@@ -7,9 +7,15 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from django.views import View
 from .models import Article
 from .forms import ArticleForm
 # Create your views here.
+class HomeView(View):
+    template_name='blog/article_list.html'
+    queryset=Article.objects.all()
+    def get(self,request):
+        return render(request,self.template_name,{'object_list':self.queryset})
 class ArticleListView(ListView):
     # optional
     model=Article
@@ -44,5 +50,5 @@ class ArticleDeleteView(DeleteView):
     def get_object(self):
         id_=self.kwargs.get('id')
         return get_object_or_404(Article,id=id_)
-#    def get_success_url(self):
-#       return reverse('home')
+    def get_success_url(self):
+       return reverse('home')
