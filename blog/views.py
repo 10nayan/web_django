@@ -52,3 +52,4 @@ class ArticleDeleteView(DeleteView):
         return get_object_or_404(Article,id=id_)
     def get_success_url(self):
        return reverse('home')
+

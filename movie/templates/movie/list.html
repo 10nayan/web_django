@@ -1,0 +1,109 @@
+{% extends 'movie/base.html' %}
+{% block title %} list {% endblock %}
+{% block static%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movie/style/rating.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'list' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter By Genre
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'action' %}">Action</a>
+            <a class="dropdown-item" href="#">Adventure</a>
+            <a class="dropdown-item" href="#">Biography</a>
+            <a class="dropdown-item" href="#">Comedy</a>
+            <a class="dropdown-item" href="#">Crime</a>
+            <a class="dropdown-item" href="#">Drama</a>
+            <a class="dropdown-item" href="#">Horror</a>
+            <a class="dropdown-item" href="#">Mystery</a>
+            <a class="dropdown-item" href="#">Romance</a>
+            <a class="dropdown-item" href="#">Sci-fi</a>
+            <a class="dropdown-item" href="#">Thriller</a>
+            <a class="dropdown-item" href="#">War</a>
+            <a class="dropdown-item" href="#">Western</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sort By
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Date Realeased</a>
+              <a class="dropdown-item" href="#">Imdb Rating</a>
+              <a class="dropdown-item" href="#">Alphabatical</a>
+          </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+</nav>
+<h1 class="text-center">This is a movie section</h1>
+<br>
+<div class="container">
+    <div class="row">
+        {% for movie in object_list %}   
+        <div class="col-6 col-md-3" style="height:400px;">
+            {% load static %}
+            <a href="{% url 'detail' movie.pk %}">
+            <img src="{% static 'movie/image/' %}{{movie.id}}.jpg">
+            </a>
+            <h3><a href="{% url 'detail' movie.pk %}">{{movie.show_name}}</a></h3>
+            <div>
+                <span class="fa-fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <i class="fa fa-check" aria-hidden="true">Available in Netflix</i>
+            <form target="_blank" method="POST" action="https://www.youtube.com/results?search_query={{movie.search_trailler}}">
+                 <button type="submit" class="btn btn-primary">Click to Watch Trailler</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<br>
+<br>
+    {% if is_paginated %}
+    <div class="pagination justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            {% endif %}
+    
+            <li class="page-item current">
+                <a class="page-link"> {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+            </li>
+    
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+            {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endif %}
+
+{% endblock %}

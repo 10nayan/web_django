@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'second.apps.SecondConfig',
-    'blog.apps.BlogConfig'
+    'blog.apps.BlogConfig',
+    'movie.apps.MovieConfig',
+    'import_export'
 ]
 
 MIDDLEWARE = [
