@@ -16,8 +16,39 @@ class MovieDetailView(DetailView):
     template_name='movie/detail.html'
     queryset=Movies.objects.all()
 def genrelist_view(request,genre):
-    object_list=Movies.objects.filter(Genre__contains=genre)
-    paginator = Paginator(object_list,8)
+    movies_list=Movies.objects.filter(Genre__contains=genre)
+    paginator = Paginator(movies_list,8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request,'movie/list.html',{'page_obj': page_obj,'object_list':object_list})
+    return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':genre})
+def groupby_list_view(request,groupby_arg):
+    movies_list=Movies.objects.all()
+    if groupby_arg=='Director':
+        director_list=[i.Director for i in movies_list]
+        cmn_dir_list=list(set([i for i in director_list if director_list.count(i)>2]))
+        paginator = Paginator(cmn_dir_list,10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+    if groupby_arg=='Year':
+        year_list=[i.ReleaseYear for i in movies_list]
+        cmn_yr_list=list(set([i for i in year_list if year_list.count(i)>2]))
+        paginator = Paginator(cmn_yr_list,12)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+    if groupby_arg=='Language':
+        lang_list=list(set([i.Language for i in movies_list]))
+        paginator = Paginator(lang_list,10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+    return render(request,'movie/groupby.html',{'page_obj': page_obj,'groupby_arg':groupby_arg})
+def movie_list_view(request,groupby_arg,arg):
+    if groupby_arg=='Director':
+        movies_list=Movies.objects.filter(Director=arg)
+    if groupby_arg=='Year':
+        movies_list=Movies.objects.filter(ReleaseYear=arg)
+    if groupby_arg=='Language':
+        movies_list=Movies.objects.filter(Language=arg)
+    paginator = Paginator(movies_list,8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':groupby_arg})

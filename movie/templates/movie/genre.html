@@ -1,16 +1,15 @@
 {% extends 'movie/base.html' %}
-{% block title %} list {% endblock %}
-{% block static%}
-{% load static %}
+{% block title %} movie {% endblock %}
+{% block static %}
+{% load static%}
 <link rel="stylesheet" type="text/css" href="{% static 'movie/style/rating.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 {% block content %}
-<h1 class="text-center">This is  movie section</h1>
-<br>
+<h1 class="text-center">This is  {{genre}} section</h1>
 <div class="container">
     <div class="row">
-        {% for movie in object_list %}   
+        {% for movie in page_obj %}   
         <div class="col-6 col-md-3" style="height:400px;">
             {% load static %}
             <a href="{% url 'detail' movie.pk %}">
@@ -31,24 +30,23 @@
     </div>
 </div>
 <br>
-    <div class="pagination justify-content-center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-            {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
-            {% endif %}
-    
-            <li class="page-item current">
-                <a class="page-link"> {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
-            </li>
-    
-            {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
-            {% endif %}
-            </ul>
-        </nav>
-    </div>
+<div class="pagination justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+        {% endif %}
 
+        <li class="page-item current">
+            <a class="page-link"> {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+        {% endif %}
+        </ul>
+    </nav>
+</div>
 {% endblock %}

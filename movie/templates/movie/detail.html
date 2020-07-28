@@ -4,12 +4,12 @@
 <h1>{{object.Name}}</h1>
 {% load static %}
 <img src="{% static 'movie/image/' %}{{object.pk}}.jpg">
-<p>{{object.ReleaseYear}}</p>
-<p>{{object.Director}}</p>
-<p>{{object.Cast_I}}</p>
-<p>{{object.Cast_II}}</p>
-<p>{{object.ImdbRating}}</p>
-<p>{{object.Genre}}</p>
+<p>Released in: {{object.ReleaseYear}}</p>
+<p>Director: {{object.Director}}</p>
+<p>Cast 1: {{object.Cast_I}}</p>
+<p>Cast 2: {{object.Cast_II}}</p>
+<p>Imdb Rating: {{object.ImdbRating}}</p>
+<p>Genre: {{object.Genre}}</p>
 <p><a href="https://en.wikipedia.org/wiki/{{object.Name}}">Know More</a></p>
 <h3>Have you watched it?</h3>
 <h5>
