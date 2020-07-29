@@ -1,8 +1,0 @@
-{% extends 'movie/base.html' %}
-{% block title %} a movie {% endblock %}
-{% block content %}
-<h1>This is a movie section</h1>
-{% for movie in objects_list %}
-<li>{{movie.Name}}<li>
-{% endfor %}
-{% endblock %}

@@ -4,8 +4,9 @@
 <h1>{{object.Name}}</h1>
 {% load static %}
 <img src="{% static 'movie/image/' %}{{object.pk}}.jpg">
-<p>Released in: {{object.ReleaseYear}}</p>
-<p>Director: {{object.Director}}</p>
+<p>Released in: <a href="{% url 'new_list' 'Year' object.ReleaseYear %}">{{object.ReleaseYear}}</a></p>
+<p>Director: <a href="{% url 'new_list' 'Director' object.Director %}">{{object.Director}}</a></p>
+<p>Language: <a href="{% url 'new_list' 'Language' object.Language %}">{{object.Language}}</a></p>
 <p>Cast 1: {{object.Cast_I}}</p>
 <p>Cast 2: {{object.Cast_II}}</p>
 <p>Imdb Rating: {{object.ImdbRating}}</p>
