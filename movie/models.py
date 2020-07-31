@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 # Create your models here.
 class Movies(models.Model):
     Director=models.CharField(max_length=30)
@@ -7,19 +6,12 @@ class Movies(models.Model):
     Cast_II=models.CharField(max_length=30)
     Name=models.TextField()
     ReleaseYear=models.IntegerField()
-    ImdbRating=models.CharField(max_length=2)
+    ImdbRating=models.CharField(max_length=3)
     Genre=models.TextField(null=True)
     Language=models.CharField(max_length=20,null=True)
     Like=models.IntegerField()
     Dislike=models.IntegerField()
-    def like_this_movie(self):
-        self.Like+=1
-        self.save()
-        return reverse ('list',kwargs={})
-    def dislike_this_movie(self):
-        self.Dislike+=1
-        self.save()
-        return reverse ('list',kwargs={})
+    Availbility=models.TextField(null=True)
     def __str__(self):
         return f"{self.Name} {self.ReleaseYear}"
     def show_name(self):

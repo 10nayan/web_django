@@ -10,7 +10,7 @@
 <br>
 <div class="container">
     <div class="row">
-        {% for movie in object_list %}   
+        {% for movie in page_obj %}   
         <div class="col-6 col-md-3" style="height:500px;">
             {% load static %}
             <a href="{% url 'detail' movie.pk %}">
@@ -26,7 +26,12 @@
                 <span>Dislike</span>
                 <span>{{movie.Dislike}}</span>
             </div>
-            <i class="fa fa-check" aria-hidden="true">Available in Netflix</i>
+            {% if movie.Availbility %}
+                <i class="fa fa-check" aria-hidden="true">Availble in {{movie.Availbility}}</i>
+            {% else %}
+            <i class="fa fa-times" aria-hidden="true"> Not Available</i>
+            {% endif %}
+            <!--<i class="fa fa-check" aria-hidden="true">{{movie.Available}}</i>-->
             <form target="_blank" method="POST" action="https://www.youtube.com/results?search_query={{movie.search_trailler}}">
                  <button type="submit" class="btn btn-primary">Click to Watch Trailler</button>
             </form>

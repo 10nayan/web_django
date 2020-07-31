@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from .models import Movies
 from django.views.generic import CreateView, DetailView,ListView,UpdateView,DeleteView
 from django.views import View
+from django.urls import reverse
+from django.http import HttpResponse
 # Create your views here.
 class IndexView(View):
     template_name='movie/index.html'
@@ -61,3 +63,13 @@ def movie_list_view(request,groupby_arg,arg):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':groupby_arg})
+def like_this_movie(request,key):
+    obj=Movies.objects.get(pk=key)
+    obj.Like+=1
+    obj.save()
+    return redirect('/movie/list')
+def dislike_this_movie(request,key):
+    obj=Movies.objects.get(pk=key)
+    obj.Dislike+=1
+    obj.save()
+    return redirect('/movie/list')
