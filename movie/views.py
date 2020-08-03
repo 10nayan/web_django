@@ -73,3 +73,10 @@ def dislike_this_movie(request,key):
     obj.Dislike+=1
     obj.save()
     return redirect('/movie/list')
+def search(request):
+    search_obj=request.POST.get('search_obj')
+    movies_list=Movies.objects.filter(Name__icontains=search_obj)
+    paginator = Paginator(movies_list,100)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request,'movie/genre.html',{'page_obj': page_obj})
