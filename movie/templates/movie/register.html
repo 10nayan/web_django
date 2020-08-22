@@ -1,0 +1,12 @@
+{% extends 'movie/base.html' %}
+{% block title %} movie {% endblock %}
+{% block content %}
+<div style="width: 500px;">
+<h1>This is User Registration section</h1>
+<form action='{% url 'register' %}' method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" class="btn btn-primary">
+</form>
+</div>
+{% endblock %}

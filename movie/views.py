@@ -4,7 +4,10 @@ from .models import Movies
 from django.views.generic import CreateView, DetailView,ListView,UpdateView,DeleteView
 from django.views import View
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
+from django.contrib.auth import authenticate,login
+from django.contrib import messages
+from .forms import UserForm
 # Create your views here.
 class IndexView(View):
     template_name='movie/index.html'
@@ -67,16 +70,39 @@ def like_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Like+=1
     obj.save()
-    return redirect('/movie/list')
+    return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
 def dislike_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Dislike+=1
     obj.save()
-    return redirect('/movie/list')
+    return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
 def search(request):
     search_obj=request.POST.get('search_obj')
     movies_list=Movies.objects.filter(Name__icontains=search_obj)
     paginator = Paginator(movies_list,100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request,'movie/genre.html',{'page_obj': page_obj})
+    return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':'search'})
+def register(request):
+    if request.method=="POST":
+        form=UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/movie/list')
+    else:
+        form=UserForm()
+    return render(request,'movie/register.html',{'form':form})
+def signin(request):
+    if request.method=="POST":
+        username=request.POST['username']
+        password=request.POST['password']
+        user=authenticate(request,username=username,password=password)
+        if user is not None:
+            login(request,user)
+            messages.info(request, f"You are now logged in as {username}")
+            #return redirect('/movie/signin')
+            return HttpResponse(f"You are now logged in as {username}")
+        else:
+            #messages.error(request,"Invalid username or password")
+            return HttpResponse("Invalid username or password")
+    return render (request,'movie/signin.html')
