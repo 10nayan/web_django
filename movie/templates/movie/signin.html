@@ -8,6 +8,13 @@
   <body>
     <div style="position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);width:480px;">
     <h1 style="font-size:50px;"class="text-center">Sign In</h1>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <form action="{% url 'signin' %}" method='POST'>
       {% csrf_token %}

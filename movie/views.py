@@ -8,6 +8,7 @@ from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import authenticate,login
 from django.contrib import messages
 from .forms import UserForm
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 class IndexView(View):
     template_name='movie/index.html'
@@ -88,7 +89,8 @@ def register(request):
         form=UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/movie/list')
+            messages.success(request, 'Account created successfully')
+            return redirect('/movie/signin')
     else:
         form=UserForm()
     return render(request,'movie/register.html',{'form':form})
