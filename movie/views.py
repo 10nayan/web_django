@@ -5,7 +5,7 @@ from django.views.generic import CreateView, DetailView,ListView,UpdateView,Dele
 from django.views import View
 from django.urls import reverse
 from django.http import HttpResponse,JsonResponse
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import UserForm
 from django.contrib.auth.forms import UserCreationForm
@@ -89,7 +89,7 @@ def register(request):
         form=UserForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account created successfully')
+            messages.success(request, 'Account created successfully, signin now')
             return redirect('/movie/signin')
     else:
         form=UserForm()
@@ -101,10 +101,12 @@ def signin(request):
         user=authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            messages.info(request, f"You are now logged in as {username}")
-            #return redirect('/movie/signin')
-            return HttpResponse(f"You are now logged in as {username}")
+            messages.success(request, f"You are now logged in as {username}")
+            return redirect('/movie/signin')
         else:
-            #messages.error(request,"Invalid username or password")
-            return HttpResponse("Invalid username or password")
+            messages.warning(request,"Invalid username or password")
+            return redirect('/movie/signin')
     return render (request,'movie/signin.html')
+def signout(request):
+    logout(request)
+    return redirect('/movie/list')
