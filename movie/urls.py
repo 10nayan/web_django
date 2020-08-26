@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import IndexView,MovieListView,search,register,signin,MovieDetailView,genrelist_view,groupby_list_view,movie_list_view,like_this_movie,dislike_this_movie,signout
+from .views import IndexView,MovieListView,search,register,signin,MovieDetailView,genrelist_view,groupby_list_view,movie_list_view,like_this_movie,dislike_this_movie,signout,profile_view
 urlpatterns=[
     path('', IndexView.as_view(),name='index'),
     path('list', MovieListView.as_view(),name='list'),
@@ -12,5 +12,6 @@ urlpatterns=[
     path('<int:key>/dislike',dislike_this_movie,name='dislike'),
     path('register',register,name='register'),
     path('signin',signin,name='signin'),
-    path('signout',signout,name='signout')
+    path('signout',signout,name='signout'),
+    path('profile',profile_view,name='profile')
 ]

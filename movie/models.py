@@ -24,3 +24,9 @@ class Movies(models.Model):
         search_string=self.Name.replace(' ','+')
         search_string+="+trailler"
         return search_string
+class Profile(models.Model):
+    Name=models.CharField(max_length=30)
+    Liked_movies=models.TextField()
+    Disliked_movies=models.TextField()
+    Watch_list=models.TextField()
+    ProfileLinked=models.ForeignKey(User, on_delete=models.CASCADE,related_name='user')

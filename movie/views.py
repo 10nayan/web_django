@@ -110,3 +110,5 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('/movie/list')
+def profile_view(request):
+    return render (request,'movie/profile.html')
