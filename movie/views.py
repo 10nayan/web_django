@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
-from .models import Movies
+from .models import Movies,Profile
 from django.views.generic import CreateView, DetailView,ListView,UpdateView,DeleteView
 from django.views import View
 from django.urls import reverse
@@ -111,4 +111,5 @@ def signout(request):
     logout(request)
     return redirect('/movie/list')
 def profile_view(request):
-    return render (request,'movie/profile.html')
+    obj=Profile.objects.filter(ProfileLinked=request.user)
+    return render (request,'movie/profile.html',{'object':obj})

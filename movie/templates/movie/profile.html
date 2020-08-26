@@ -1,10 +1,20 @@
 {% extends 'movie/base.html' %}
 {% block title %} movie {% endblock %}
+{% block static%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movie/style/rating.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 {% block content %}
 <h1>This is a profile section</h1>
 <h3>{{request.user.get_full_name}}</h3>
 <h3>{{request.user.email}}</h3>
 <h3>Liked Movies:</h3>
 <h3>Disiked Movies:</h3>
-<h3>Wathlist Movies:</h3>
+<h3>Watch List</h3>
+{% for i in object %}
+<a href="{% url 'detail' i.pk %}">
+<p>{{i.Watch_list}}</p>
+</a>
+{% endfor %}
 {% endblock %}
