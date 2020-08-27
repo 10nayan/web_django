@@ -63,6 +63,8 @@
     <button id="dislikebtn" type="submit" class="btn btn-primary">Dislike</button>
 </h5>
 <h3>Want to save for later?</h3>
+<form method="GET" action="{% url 'watchlist' object.pk request.user.username %}">
 <button type="submit" class="btn btn-primary">Add to watchlist</button>
+</form>
 </div>
 {% endblock %}

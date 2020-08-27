@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import UserForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 # Create your views here.
 class IndexView(View):
     template_name='movie/index.html'
@@ -113,3 +114,13 @@ def signout(request):
 def profile_view(request):
     obj=Profile.objects.filter(ProfileLinked=request.user)
     return render (request,'movie/profile.html',{'object':obj})
+def add_to_watchlist(request,key,usrname):
+    obj=Movies.objects.get(pk=key)
+    user=User.objects.get(username=usrname)
+    profile=Profile(Watch_list=obj,ProfileLinked=user)
+    profile.save()
+    return redirect('/movie/profile')
+def remove_from_watchlist(request,key,usrname):
+    profile=Profile.objects.get(pk=key)
+    profile.delete()
+    return redirect('/movie/list')
