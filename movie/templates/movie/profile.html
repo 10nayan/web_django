@@ -13,7 +13,7 @@
 <h3>Disiked Movies:</h3>
 <h3>Watch List</h3>
 {% for i in object %}
-<a href="{% url 'detail' i.pk %}">
+<a href="{% url 'detail' i.Watch_list.pk %}">
 <p>{{i.Watch_list}}   <a href="{% url 'nowatchlist' i.pk request.user.username %}">Remove</a> </p>
 </a>
 {% endfor %}

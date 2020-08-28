@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from .models import Movies,Profile
-from django.views.generic import CreateView, DetailView,ListView,UpdateView,DeleteView
+from django.views.generic import DetailView,ListView
 from django.views import View
 from django.urls import reverse
 from django.http import HttpResponse,JsonResponse
@@ -9,7 +9,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import UserForm
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your views here.
 class IndexView(View):
     template_name='movie/index.html'
@@ -123,4 +124,4 @@ def add_to_watchlist(request,key,usrname):
 def remove_from_watchlist(request,key,usrname):
     profile=Profile.objects.get(pk=key)
     profile.delete()
-    return redirect('/movie/list')
+    return redirect('/movie/profile')

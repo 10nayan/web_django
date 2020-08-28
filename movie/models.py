@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 class Movies(models.Model):
     Director=models.CharField(max_length=30)
@@ -26,4 +26,4 @@ class Movies(models.Model):
         return search_string
 class Profile(models.Model):
     Watch_list=models.ForeignKey(Movies, on_delete=models.CASCADE,related_name="watch_later",null=True)
-    ProfileLinked=models.ForeignKey(User, on_delete=models.CASCADE,related_name='user')
+    ProfileLinked=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='user')
