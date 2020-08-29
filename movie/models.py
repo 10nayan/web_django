@@ -27,3 +27,9 @@ class Movies(models.Model):
 class Profile(models.Model):
     Watch_list=models.ForeignKey(Movies, on_delete=models.CASCADE,related_name="watch_later",null=True)
     ProfileLinked=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='user')
+class ProfileLikedMovie(models.Model):
+    Liked_list=models.ForeignKey(Movies, on_delete=models.CASCADE,related_name="like_later",null=True)
+    ProfileLinked=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='userliked')
+class ProfileDislikedMovie(models.Model):
+    Dislike_list=models.ForeignKey(Movies, on_delete=models.CASCADE,related_name="dislike_later",null=True)
+    ProfileLinked=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='userdisliked')

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
-from .models import Movies,Profile
+from .models import Movies,Profile,ProfileLikedMovie,ProfileDislikedMovie
 from django.views.generic import DetailView,ListView
 from django.views import View
 from django.urls import reverse
@@ -73,11 +73,24 @@ def like_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Like+=1
     obj.save()
+    if request.user.is_authenticated:
+        usrname=request.user.get_username()
+        user=User.objects.get(username=usrname)
+        profile=ProfileLikedMovie(Liked_list=obj,ProfileLinked=user)
+        profile.save()
+        return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
+
     return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
 def dislike_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Dislike+=1
     obj.save()
+    if request.user.is_authenticated:
+        usrname=request.user.get_username()
+        user=User.objects.get(username=usrname)
+        profile=ProfileDislikedMovie(Dislike_list=obj,ProfileLinked=user)
+        profile.save()
+        return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
     return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
 def search(request):
     search_obj=request.POST.get('search_obj')
@@ -113,8 +126,10 @@ def signout(request):
     logout(request)
     return redirect('/movie/list')
 def profile_view(request):
-    obj=Profile.objects.filter(ProfileLinked=request.user)
-    return render (request,'movie/profile.html',{'object':obj})
+    obj1=ProfileLikedMovie.objects.filter(ProfileLinked=request.user)
+    obj2=ProfileDislikedMovie.objects.filter(ProfileLinked=request.user)
+    obj3=Profile.objects.filter(ProfileLinked=request.user)
+    return render (request,'movie/profile.html',{'object1':obj1,'object2':obj2,'object3':obj3})
 def add_to_watchlist(request,key,usrname):
     obj=Movies.objects.get(pk=key)
     user=User.objects.get(username=usrname)
