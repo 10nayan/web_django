@@ -14,6 +14,6 @@ urlpatterns=[
     path('signin',signin,name='signin'),
     path('signout',signout,name='signout'),
     path('profile',profile_view,name='profile'),
-    path('<int:key>/<str:usrname>/detail/watchlist',add_to_watchlist,name='watchlist'),
-    path('<int:key>/<str:usrname>/detail/nowatchlist',remove_from_watchlist,name='nowatchlist')
+    path('<int:key>/detail/watchlist',add_to_watchlist,name='watchlist'),
+    path('<int:key>/detail/nowatchlist',remove_from_watchlist,name='nowatchlist')
 ]

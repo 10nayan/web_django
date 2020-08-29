@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import UserForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your views here.
@@ -76,8 +77,11 @@ def like_this_movie(request,key):
     if request.user.is_authenticated:
         usrname=request.user.get_username()
         user=User.objects.get(username=usrname)
-        profile=ProfileLikedMovie(Liked_list=obj,ProfileLinked=user)
-        profile.save()
+        try:
+            ProfileLikedMovie.objects.get(Liked_list=obj,ProfileLinked=user)
+        except:
+            profile=ProfileLikedMovie(Liked_list=obj,ProfileLinked=user)
+            profile.save()
         return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
 
     return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
@@ -88,8 +92,11 @@ def dislike_this_movie(request,key):
     if request.user.is_authenticated:
         usrname=request.user.get_username()
         user=User.objects.get(username=usrname)
-        profile=ProfileDislikedMovie(Dislike_list=obj,ProfileLinked=user)
-        profile.save()
+        try:
+            ProfileDislikedMovie.objects.get(Dislike_list=obj,ProfileLinked=user)
+        except:
+            profile=ProfileDislikedMovie(Dislike_list=obj,ProfileLinked=user)
+            profile.save()
         return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
     return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
 def search(request):
@@ -124,19 +131,25 @@ def signin(request):
     return render (request,'movie/signin.html')
 def signout(request):
     logout(request)
-    return redirect('/movie/list')
+    return redirect('/movie/signin')
 def profile_view(request):
     obj1=ProfileLikedMovie.objects.filter(ProfileLinked=request.user)
     obj2=ProfileDislikedMovie.objects.filter(ProfileLinked=request.user)
     obj3=Profile.objects.filter(ProfileLinked=request.user)
     return render (request,'movie/profile.html',{'object1':obj1,'object2':obj2,'object3':obj3})
-def add_to_watchlist(request,key,usrname):
+@login_required(login_url='signin')
+def add_to_watchlist(request,key):
+    usrname=request.user.get_username()
     obj=Movies.objects.get(pk=key)
     user=User.objects.get(username=usrname)
-    profile=Profile(Watch_list=obj,ProfileLinked=user)
-    profile.save()
-    return redirect('/movie/profile')
-def remove_from_watchlist(request,key,usrname):
+    try:
+        Profile.objects.get(Watch_list=obj,ProfileLinked=user)
+    except:
+        profile=Profile(Watch_list=obj,ProfileLinked=user)
+        profile.save()
+    finally:
+        return redirect('/movie/profile')
+def remove_from_watchlist(request,key):
     profile=Profile.objects.get(pk=key)
     profile.delete()
     return redirect('/movie/profile')
