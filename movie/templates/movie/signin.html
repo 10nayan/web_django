@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Sign In</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
-  <body>
-    <div style="position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);width:480px;">
+{% extends 'movie/base.html' %}
+{% block title %} signin {% endblock %}
+{% block content %}
+    <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:500px">
     <h1 style="font-size:50px;"class="text-center">Sign In</h1>
     {% if messages %}
-    <div class="messages">
+    <div class="messages text-center">
         {% for message in messages %}
-        <p {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
+        <p {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} style="font-size: 20px;">{{ message }}</p>
         {% endfor %}
     </div>
     {% endif %}
@@ -37,8 +32,4 @@
 <button type="button" class="btn btn-outline-primary" style="font-size:20px; "onclick="window.location.href='/movie/register'">Sign Up</button>
 <button type="button" class="btn btn-outline-primary" style="font-size: 20px;float: right;" onclick="window.location.href='/movie/list'">Home</button>
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% endblock %}
